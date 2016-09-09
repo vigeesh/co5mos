@@ -1,65 +1,842 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Model</title>
-</head>
-<body>
-<br><br>
-<table border="0">
-<tbody>
-<tr><td><b>Model parameters:</b><br>
-<hr />Effective T = 5770.0 K<br>
-log g = 4.44<br>
-Inflowing s = 1.773E+09 erg/K/g<hr /><br>
-</td><td></td><td></td><td></td><td></td><td><b>Numerical Specs:</b><br>
-<hr />
-Scheme: HLLMHD<br>
-Reconstruction: Constant<br><hr />
-</td></tr></tr>
-</tbody>
-</table>
-<br><br>
-<table border="0">
-<tbody>
-<tr><td><img src="t_5770.0_s_1.773E+09.png" alt="frtop"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td>
-<td><img src="entropy_t_5770.0_s_1.773E+09.png" alt="s mean"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td></tr>
-</tr>
-</tbody>
-</table>
-<br><br>
-<table border="0">
-<tbody>
-<tr><td><img src="massflux_t_5770.0_s_1.773E+09.png" alt="mass flux"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td>
-<td><img src="p_mean_t_5770.0_s_1.773E+09.png" alt="p mean"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td></tr>
-</tr>
-</tbody>
-</table>
-<br><br>
-<table border="0">
-<tbody>
-<tr><td><img src="intensity_t_5770.0_s_1.773E+09.png" alt="intensity"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td>
-<td><img src="walltime_5770.0_s_1.773E+09.png" alt="walltime"
-id="banner" style="border: 0px solid ; width: 500px;"><br></td></tr>
-</tr>
-</tbody>
-</table><br>
-Page updated at 15:35 on 20-01-2015<br>
-<script type="text/javascript">
-var d=new Date();
-document.write("Current time : "+d);
-</script>
+=======
+<!DOCTYPE html>
+<html>
 
-<br><br><br><hr />
-<font color="red">Note:</font><br><font size="2">This is an automatically generated/updated webpage intended to display results of a live simulation run.<br>Pardon me if this page does not make any sense to you.<br>Either you are here by chance or I have asked you to check this.</font><br><hr />
+>>>>>>> master
+<head>
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://dl.dropboxusercontent.com/s/xcsx96dxzsg5wwz/fullset.json?dl=1"></script>
+    <script src="https://dl.dropboxusercontent.com/s/ij1dm99guecd80n/frtop.json?dl=1"></script>
+    <style type="text/css">
+        body {
+            font-family: 'Helvetica Neue', Helvetica;
+            font-size: 12px;
+            font-weight: 300;
+            padding: 20px;
+        }
+        
+        th {
+            text-align: left;
+        }
+        
+        th,
+        td {
+            padding: 0 1em 0.5ex 0;
+        }
+        
+        th.center,
+        td.center {
+            text-align: center;
+        }
+        
+        th.num,
+        td.num {
+            text-align: right;
+        }
+        
+        svg {
+            font-family: 'Helvetica Neue', Helvetica;
+            font-weight: 300;
+        }
+        
+        p#area0 {
+            width: 100%;
+            height: 50px;
+            font-family: 'Helvetica Neue', Helvetica;
+            font-weight: 300;
+            font-size: 20px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .modeline{
+            //background:WhiteSmoke ;
+            height: 50%;
+            width: 100%;
+            vertical-align: middle; 
+        }
+        
+        div#modelphy { 
+            width: 25%;
+            height: 200px;
+            overflow: auto;
+            font-family: sans-serif;
+            font-size: 12px;
+            margin-right: auto;
+            margin-left: auto;
+            float: left;
+            
+        }
+        div#modelcomp { 
+            width: 25%;
+            height: 200px;
+            overflow: auto;
+            font-family: sans-serif;
+            font-size: 12px;
+            margin-right: auto;
+            margin-left: auto;
+            float: left;
+            vertical-align: middle; 
+            
+        }
+        div#models {
+            width: 50%;
+            height: 200px;
+            overflow: auto;
+            font-family: sans-serif;
+            font-size: 12px;
+            margin-right: auto;
+            margin-left: auto;
+             vertical-align: middle; 
+            float: left;
+        }
+        
+        div#parambox {
+            width: 500px;
+            height: 300px;
+            overflow: auto;
+            font-family: 'Helvetica Neue', Helvetica;
+            font-size: 12px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        
+        
+        /* tell the SVG path to be a thin blue line without any area fill */
+			path {
+				stroke: steelblue;
+				stroke-width: 1;
+				fill: none;
+			}
+			
+            .axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			
+			.axis text {
+				font-family: sans-serif;
+				font-size: 12px;
+			}
+            
+			.axis {
+			  shape-rendering: crispEdges;
+			}
+
+			.x.axis line {
+			  stroke: lightgrey;
+			}
+
+			.x.axis .minor {
+			  stroke-opacity: .5;
+			}
+
+            .y.axis .minor {
+			  stroke-opacity: .5;
+			}
+            
+			.x.axis path {
+                fill: none;
+			  stroke: lightgrey;
+                stroke-width: 2px;
+			}
+
+			.y.axis line, .y.axis path {
+			  fill: none;
+			  stroke: lightgrey;
+                stroke-width: 2px;
+			}
+            
+            .axislabel {
+               font-family: sans-serif;
+				font-size: 12px; 
+            }
+            .myline {
+                stroke: gray;
+                shape-rendering: optimizeSpeed;
+			}
+       
+    </style>
+</head>
+
+
+<body>
+    <p id="area0" , align="center">My models</p>
+    <div class="row  row-eq-height" id="blocks">
+        <div class="col-sm-3" id="blockl">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Numerics
+                    </div>
+                    <div class="panel-body">
+                        <div id="blocklefttop"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Boundary Conditions
+                    </div>
+                    <div class="panel-body">
+                        <div id="blockleftbot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6" id="blockcenter">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center" style="max-height: 10;">
+                        <div id="blocktop"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="blockbottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-sm-3" id="blockr">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Infrastructure
+                    </div>
+                    <div class="panel-body">
+                        <div id="blockright"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    <div class="row  row-eq-height" >-->
+<!--    <div id="blinky" class="col-sm-12" style="max-height: 12px;">-->
+    <div id="blinky" style="max-height: 12px;">
+    </div>
+
+    <div class="row  row-eq-height" id="blocksrunning">
+<!--      <div class="col-sm-1"></div>-->
+      <div class="col-sm-3" id="blockrunl">
+          <div class="panel-group">
+                <div class="panel panel-default">
+<!--
+                    <div class="panel-heading">
+                        Boundary
+                    </div>
+-->
+                    <div class="panel-body">
+                       <img class="img-responsive" src="https://dl.dropboxusercontent.com/s/r6xr3c0eholnsx0/intensity.png?dl=1" id="intensityimg">
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div class="col-sm-6" id="blockrunr">
+          <div class="panel-group">
+                <div class="panel panel-default">
+<!--
+                    <div class="panel-heading">
+                        Boundary
+                    </div>
+-->
+                    <div class="panel-body">
+                        <form id="mybuttons">
+                            <button type="button" class="btn my-btn btn-xs" name="quant" value="frtop" checked>Rad. Flux</button>
+                            <button type="button" class="btn my-btn btn-xs"  name="quant" value="masflx_x3" >Mass Flux</button>
+                            <button type="button" class="btn my-btn btn-xs"  name="quant" value="p_mean_x3">Pressure</button>
+                            <button type="button" class="btn my-btn btn-xs"  name="quant" value="s_mean2_x3">Entropy</button>
+                        </form>  
+                        <div id="blockrright"></div>
+                    </div>
+                </div>
+            </div>
+      </div> 
+<!--      <div class="col-sm-1"></div>-->
+    </div>
+    
+    
+<!--
+    
+    <div id="parambox">
+        <table id="split">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+-->
+    <script type="text/javascript">
+         
+        //refresh window when resized 
+        window.onresize = function(){ 
+            window.location = window.location;
+        }
+
+        var dateoptions = {
+            year: "numeric", month: "short",
+            day: "numeric", hour: "2-digit", minute: "2-digit"
+        };
+
+
+        var padding = document.getElementById("blockbottom").offsetWidth/10;
+			
+        var margin = {
+                top: 0,
+                right: document.getElementById("blockbottom").offsetWidth * 0.05,
+                bottom: 12,
+                left: document.getElementById("blockbottom").offsetWidth * 0.05
+            },
+            width = document.getElementById("blockbottom").offsetWidth - margin.left - margin.right,
+            height = document.getElementById("blockbottom").offsetHeight - margin.top - margin.bottom;
+
+        
+        
+        
+        var modtipphys = d3.select("#blocklefttop")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .style("visibility", "hidden");
+
+        var modtipbc = d3.select("#blockleftbot")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .style("visibility", "hidden");
+        
+        var modtipname = d3.select("#blocktop")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .html("<b></b><br/>")
+            .style("visibility", "hidden");
+        
+        
+        var modtipmain = d3.select("#blocktop")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .style("visibility", "hidden");
+        
+        
+        var modtipcomp = d3.select("#blockright")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .style("visibility", "hidden");
+
+        var xScale = d3.scale.linear()
+            .domain([-10., 50000.]) //the minimum and maximum time of the entire simulation
+            .range([padding, width - padding * 2]);
+
+        var starttime = [10, 20, 30, 40];
+
+
+
+        var clickedOnce = false;
+
+        var w = 500;
+        var h = 150;
+        var barPadding = 1;
+
+        
+        var htitles=['Datatype','Parameter','Value'];
+
+        //Create SVG element
+        var svg = d3.select("#blockbottom")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+
+        var timeline = svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("g")
+            .append("rect")
+            .attr("x", function (d) { return xScale(d.simstartime+d.parenttime);})
+            .attr("y", function (d, i) { return i * (h / dataset.length);})
+            .attr("width", function (d) { return xScale(d.simduration);})
+            .attr("height", h / dataset.length - 0.2 * h / dataset.length)
+            .style("cursor", "pointer")
+            .style("fill", function (d) { return d.magnetic == 1 ? "silver" : "gray"; })
+            .on("mouseover", function (d) {
+                //change the model to red
+                d3.select(this)
+                .transition()		
+                .duration(100)
+                .style("fill", "red");
+
+                //tooltip.transition()		
+                //.duration(100).style("visibility", "visible").style("top", (10)+"px").style("left",(10)+"px").text(d.model);
+                var start_date = new Date(d.wallstartime)
+                var end_date = new Date(d.wallendtime)
+                // calculate (and subtract) whole days
+                var durdays = Math.floor(d.wallduration / 86400);
+                delta = d.wallduration - (durdays * 86400);
+                //alert(delta);
+                
+                // calculate (and subtract) whole hours
+                var durhours = Math.floor(delta / 3600) % 24;
+                delta = delta - (durhours * 3600);
+
+                // calculate (and subtract) whole minutes
+                var durminutes = Math.floor(delta / 60) % 60;
+                delta = delta - (durminutes * 60);
+
+                // what's left is seconds
+                var durseconds = delta % 60;  // in theory the modulus is not required
+                
+                var lookup = {};
+                
+                
+                
+                for (var i = 0, len = d.params.length; i < len; i++) {
+                    lookup[d.params[i].parameter] = d.params[i].value;
+                }
+
+//                modtipmain.html("<b>Temperature:</b>  " + parseInt(lookup["teff"]) +" K <br/>"  
+//                                + "<b>Gravity:</b>  " + parseInt(lookup["grav"]) +" cm s<sup>-2</sup>"  + "<br/>"  
+//                                + "<b>Entropy (inflow):</b>  " + lookup["s_inflow"] +" erg g<sup>-1</sup> K<sup>-1</sup>"  + "<br/>"  
+//                                )
+//                    .transition()
+//                    .duration(100)
+//                    .style("visibility", "visible")
+                
+                modtipphys.html(" <b>Scheme: </b>" + lookup["hdscheme"] + "<br/>"  
+                                + " <b>Reconstruction: </b>" + lookup["reconstruction"] + "<br/>"             
+                                + " <b>Radiative Transfer: </b>" + lookup["radscheme"] + "<br/>"                             
+                                )
+                    .transition()
+                    .duration(100)
+                    .style("visibility", "visible")
+                
+                modtipbc.html("<b>Side: </b>" + lookup["side_bound"] + "<br/>"
+                                + "  <b>Bottom: </b>" + lookup["bottom_bound"] + "<br/>"
+                                + "  <b>Top: </b>" + lookup["top_bound"] + "<br/>"
+                                )
+                    .transition()
+                    .duration(100)
+                    .style("visibility", "visible")
+                
+                modtipname.html("<b>"+d.name+"</b><br/>"  
+                                )
+                    .transition()
+                    .duration(100)
+                    .style("visibility", "visible")
+                
+                
+                
+                modtipcomp.html("<b>Hardware:</b> " + d.hardware + "<br/>"  
+                               + "<b>Machine:</b> " + d.machine + "<br/>"  
+                               + "<b>System:</b> " + d.system + "<br/>" 
+                               + "<b>Started:</b> " + start_date.toLocaleTimeString("en-us", dateoptions) + "<br/>" 
+                               + "<b>Ended:</b> " + end_date.toLocaleTimeString("en-us", dateoptions) + "<br/>" 
+                               + "<b>Duration:</b> " + durdays + " d, " + durhours + " h, " + durminutes + " m " + "<br/>" 
+                               )
+                
+                    .transition()
+                    .duration(100)
+                    .style("visibility", "visible")
+            })
+            .on("mouseout", function (d) {
+                // change the model back to the defualt color
+                d3.select(this)
+                    .transition()
+                    .duration(100)
+                    .style("fill", function (d) { return d.magnetic == 1 ? "silver" : "gray"; });
+ 
+                
+                modtipname.transition()		
+                .duration(100).style("visibility", "hidden");
+                
+                modtipmain.transition()		
+                .duration(100).style("visibility", "hidden");
+                
+                modtipphys.transition()		
+                .duration(100).style("visibility", "hidden");
+           
+                modtipbc.transition()		
+                .duration(100).style("visibility", "hidden");
+                
+                modtipcomp.transition()		
+                .duration(100).style("visibility", "hidden");
+                
+                if (d3.select('body').select(".mypartable").empty()){
+                    
+                } else {
+                d3.select('#parambox').selectAll("table").style("opacity","0.25");
+                }
+            });
+   //         .on("click", function (d) {
+                
+//                
+//            if (d3.select('#parambox').select(".mypartable").empty()){
+//                
+//            } else {
+//                d3.select('#parambox').select(".mypartable").remove();
+//            }
+//                
+//            var table = d3.select('#parambox').attr("class","mypartable").append('table');
+//            var thead = table.append("thead");
+//            var tbody = table.append("tbody");   
+//
+//            var heading = thead.append('tr')//.append('tr')
+//                    .selectAll('th')
+//                    .data(htitles)
+//                    .enter()
+//                    .append('th')
+//                    .text(function(d){return d; });
+//                
+//            var rows = tbody.selectAll("tr")
+//                    .data(d.params).enter().append("tr");
+//                
+//            var cells = rows.selectAll("td")
+//                    .data(function(d){return d3.values(d)})
+//                    .enter().append("td")
+//                    .text(function(d) {return d});
+//                    //parbox.active = active;
+    
+  //          });
+  
+    
+        var circle = svg.selectAll("line")
+            .data(dataset)
+            .enter()
+            .append("g")
+            .append("line")
+            .attr("x1", function (d) { return xScale(d.simstartime+d.parenttime);})
+            .attr("y1", function (d, i) { 
+                return i * (h / dataset.length);})
+            .attr("x2", function (d) { return xScale(d.simstartime+d.parenttime);})
+            .attr("y2", function (d, i) { 
+                //var lookup = {};
+                //for (var i = 0, len = dataset.length; i < len; i++) {
+                //    lookup[dataset[i].name] = dataset[i].name;
+                //  //  alert(dataset.name.value)
+                //}
+                //alert(lookup["SVGd3r02bv5cpp3"])
+                return (i+1) * (h / dataset.length);})
+            .attr("stroke-width", 1)
+            .attr("stroke", "gray");
+        
+        var svg2 = d3.select('#parambox')
+            .on("mouseover", function (d) {
+                d3.select(this).selectAll("table")
+                .style("opacity","1");
+
+            });
+        
+                
+            
+        // var table = ;
+
+
+
+        
+        
+        //blinker for running programs
+        var blinker = svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d, i) {
+                return xScale(d.simendtime) + padding + 0.1*padding;
+            })
+            .attr("cy", function (d, i) {
+                return i * (h / dataset.length) + 0.4 * (h / dataset.length);
+            })
+            .attr("r", function (d) {
+                return d.running == 0 ? 0 : (h / dataset.length) / 4.5;
+            })
+
+//         var blinker2text = d3.select("#blinky").append("svg")
+//            .append("text")
+//            .attr("x", 100)
+//            .attr("y", 9)
+//            .text("gg")
+        
+        var blinker2 = d3.select("#blinky")
+            .append("svg").append("circle")
+            .attr("cx", 4)
+            .attr("cy", 4)
+            .attr("r", (h / dataset.length) / 4.5)
+        
+        
+        
+        repeat();
+
+        //function definiton, 
+        //first the color is changed to green, 
+        //transits to a interploted red
+        //https://bost.ocks.org/mike/transition/
+        function repeat() {
+            blinker.style("fill", "silver") // make the body green
+                .transition().delay(100)
+                .styleTween("fill", function () {
+                    return d3.interpolate("silver", "red");
+                })
+                .each("end", repeat);
+
+            blinker2.style("fill", "silver") // make the body green
+                .transition().delay(100)
+                .styleTween("fill", function () {
+                    return d3.interpolate("silver", "red");
+                })
+                .each("end", repeat);
+            
+        }
+
+
+
+        
+        function parameterbox() {
+            var thead = d3.select('#area2').attr("class", "mypartab").select("thead").selectAll("th")
+                .data(d)
+                .enter()
+                .append("th").text(function (d) {
+                    return d
+                })
+                .style("cursor", "pointer")
+                .on("click", function (d) {
+                    d3.select(".mypartab").remove();
+                    //parameterbox();
+                    return 0;
+                });
+
+            // fill the table
+            // create rows
+            var tr = d3.select("tbody").selectAll("tr")
+                .data(rhdpardata).enter().append("tr")
+
+            // cells
+            var td = tr.selectAll("td")
+                .data(function (d) {
+                    return d3.values(d)
+                })
+                .enter().append("td")
+                .text(function (d) {
+                    return d
+                })
+                //parbox.active = active;
+            return 0;
+        }
+
+        function parameterboxremove() {
+            d3.select("#area2").remove();
+            return 0;
+        }
+        
+        
+        
+        
+        //running part
+        
+        frt(datarunning.stime,datarunning.frtop,"blockrright");
+        
+        d3.selectAll("button").on("click", change);
+
+//        var timeout = setTimeout(function() {
+//        d3.select("input[value=\"San Francisco\"]").property("checked", true).each(change);
+//        }, 2000);
+
+        function change() {
+            //clearTimeout(timeout);
+
+            d3.select("#blockrright").selectAll("svg").remove();
+            
+            var dtime = (this.value == "frtop") ? "stime" : "time";
+            
+            frt(datarunning[dtime],datarunning[this.value],"blockrright");
+            
+            // First transition the line & label to the new city.
+            //var t0 = svg.transition().duration(750);
+            //t0.selectAll(".line").attr("d", line);
+            //t0.selectAll(".label").attr("transform", transform).text(city);
+
+            // Then transition the y-axis.
+            //y.domain(d3.extent(data, function(d) { return d[city]; }));
+            //var t1 = t0.transition();
+            //t1.selectAll(".line").attr("d", line);
+            //t1.selectAll(".label").attr("transform", transform);
+            //t1.selectAll(".y.axis").call(yAxis);
+        }
+    
+       
+        function frt(xdata,ydata,position) {
+                    //frtop 
+    
+        
+            var maxfrtop = Math.max.apply(null,ydata);
+            var minfrtop = Math.min.apply(null,ydata);
+            var maxfrtopvar = Math.max.apply(null,[maxfrtop-1,1-minfrtop]);
+
+            var padding = document.getElementById(position).offsetWidth/10;
+
+            //alert(document.getElementById("intensityimg").offsetHeight - document.getElementById("mybuttons").offsetHeight);
+            var margin = {
+                    top: 0,
+                    right: document.getElementById(position).offsetWidth *0.05,
+                    bottom: 12,
+                    left: document.getElementById(position).offsetWidth * 0.05
+                },
+                width = document.getElementById(position).offsetWidth,//document.getElementById(position).offsetWidth - margin.left - margin.right,
+                height = (document.getElementById("intensityimg").offsetHeight - document.getElementById("mybuttons").offsetHeight); //document.getElementById(position).offsetHeight - margin.top - margin.bottom;
+
+            var firsttime =  xdata[0];
+            var lasttime =  xdata[xdata.length-1];
+
+            var xScale = d3.scale.linear()
+                .domain([0, (lasttime-firsttime)/60.])
+                .range([padding, width - padding * 2]);
+
+            var yScale = d3.scale.linear()
+                .domain([minfrtop,maxfrtop])
+                //.domain([1-maxfrtopvar,1+maxfrtopvar])
+                .range([height - padding, padding]);
+
+            // create a line function that can convert data[] into x and y points
+            var line = d3.svg.line()
+                // assign the X function to plot our line as we wish
+                .x(function(d,i) { 
+                    var time = parseFloat(xdata[i]);
+                    return xScale((time-firsttime)/60.); 
+                })
+                .y(function(d,i) { 
+                    var yyy = parseFloat(ydata[i]);
+                    return yScale(yyy); 
+                })
+                .interpolate("linear");
+
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom")
+                .ticks(5)
+                .tickFormat(d3.format("i"));
+
+
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+                .ticks(5)
+                .tickFormat(d3.format("i"));
+
+            var drag = d3.behavior.drag()
+                .origin(function(d) { return d; })
+                .on("dragstart", dragstarted)
+                .on("drag", dragged)
+                .on("dragend", dragended);
+
+            var zoom = d3.behavior.zoom()
+                .x(xScale)
+                .y(yScale)
+                //.scaleExtent([0, Infinity])
+                .on("zoom", zoomed);
+
+                // Add an SVG element with the desired dimensions and margin.
+            var graph = d3.select("#"+position)
+                    .append("svg")
+                    //.attr("class","myline")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                    .call(zoom);
+
+                // create yAxis
+                //var xAxis = d3.svg.axis().scale(xScale);
+                // Add the x-axis.
+                    // calling the axes                            
+                var x_axis=	graph.append("g")
+                    .attr("class", "x axis")
+                    //.attr("transform", "translate(0," + (height/1.8 - padding) + ")")
+                    .attr("transform", "translate(0," + (height - padding) + ")")
+                    .call(xAxis)
+
+                    //Create Y axis
+                var y_axis=	graph.append("g")
+                    .attr("class", "y axis")
+                    .attr("transform", "translate(" + padding + ",0)")
+                    .call(yAxis);    
+
+                // Add the line by appending an svg:path element with the data line we created above
+                // do this AFTER the axes above so that the line is above the tick-lines
+
+            graph.append("path").attr("class","myline").attr("d", line(xdata)).style("cursor", "pointer");
+
+            graph.append("text").attr("class", "axislabel")
+                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+                .text("Frtop");
+
+            graph.append("text").attr("class", "axislabel")
+                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+
+                .attr("transform", "translate("+ (width/2) +","+(height-(padding/2))+")")  // centre below axis
+                .text("Time (min)");
+
+
+            function zoomed() {
+
+                             d3.select(this).select(".x.axis").call(xAxis); // for zooming axis
+                             d3.select(this).select(".y.axis").call(yAxis); // for zooming axis
+                             d3.select(this).select(".myline")
+                                 .attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")") //for zooming line
+                                 .style("stroke-width", 2/d3.event.scale); //for changing the width of the line while zooming
+
+                             //var scaleMultiplier = d3.event.scale;
+                             //graph.select(".myline").attr("stroke", white);
+
+                             //alert(scaleMultiplier);
+                }
+
+                //function zoomed() {
+            //    graph.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+            //}
+
+            function dragstarted(d) {
+                d3.event.sourceEvent.stopPropagation();
+                d3.select(this).classed("dragging", true);
+            }
+
+            function dragged(d) {
+                d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+            }
+
+            function dragended(d) {
+                d3.select(this).classed("dragging", false);
+            }
+
+            
+        }
+        
+        
+        
+        
+    </script>
+
+
 </body>
+<<<<<<< HEAD
 </html>
 =======
 My Page
 >>>>>>> c12c58dc921a6636f483da246d2a475cee2e2fd6
+=======
+
+</html>
+>>>>>>> master
