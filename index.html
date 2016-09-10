@@ -220,9 +220,10 @@
     </div>
 <!--    <div class="row  row-eq-height" >-->
 <!--    <div id="blinky" class="col-sm-12" style="max-height: 12px;">-->
-    <div id="blinky" style="max-height: 12px;">
+    <div class="row  row-eq-height">
+        <div class="col-xs-1" id="blinky" style="max-height: 12px;"></div>
+        <div class="col-xs-1" id="blinky2" style="max-height: 12px;"></div>
     </div>
-
     <div class="row  row-eq-height" id="blocksrunning">
 <!--      <div class="col-sm-1"></div>-->
       <div class="col-sm-3" id="blockrunl">
@@ -235,6 +236,7 @@
 -->
                     <div class="panel-body">
                        <img class="img-responsive" src="https://dl.dropboxusercontent.com/s/r6xr3c0eholnsx0/intensity.png?dl=1" id="intensityimg">
+                       
                     </div>
                 </div>
             </div>
@@ -275,9 +277,9 @@
     <script type="text/javascript">
          
         //refresh window when resized 
-        window.onresize = function(){ 
-            window.location = window.location;
-        }
+//        window.onresize = function(){ 
+//            window.location = window.location;
+//        }
 
         var dateoptions = {
             year: "numeric", month: "short",
@@ -557,11 +559,11 @@
                 return d.running == 0 ? 0 : (h / dataset.length) / 4.5;
             })
 
-//         var blinker2text = d3.select("#blinky").append("svg")
-//            .append("text")
-//            .attr("x", 100)
-//            .attr("y", 9)
-//            .text("gg")
+         var blinker2text = d3.select("#blinky2").append("svg")
+            .append("text")
+            .attr("x", 100)
+            .attr("y", 9)
+            .text("gg")
         
         var blinker2 = d3.select("#blinky")
             .append("svg").append("circle")
@@ -585,7 +587,7 @@
                 })
                 .each("end", repeat);
 
-            blinker2.style("fill", "silver") // make the body green
+        blinker2.style("fill", "silver") // make the body green
                 .transition().delay(100)
                 .styleTween("fill", function () {
                     return d3.interpolate("silver", "red");
