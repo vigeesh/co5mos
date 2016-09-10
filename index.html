@@ -221,8 +221,19 @@
 <!--    <div class="row  row-eq-height" >-->
 <!--    <div id="blinky" class="col-sm-12" style="max-height: 12px;">-->
     <div class="row  row-eq-height">
-        <div class="col-xs-1" id="blinky" style="max-height: 12px;"></div>
-        <div class="col-xs-1" id="blinky2" style="max-height: 12px;"></div>
+        <div class="col-xs-12">
+        <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="blinky" style="max-height: 14px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--
+        //<div class="col-xs-2" id="blinky2" style="max-height: 14px;"></div>
+        <div class="col-xs-10" id="blinky3" style="max-height: 14px;"></div>
+-->
     </div>
     <div class="row  row-eq-height" id="blocksrunning">
 <!--      <div class="col-sm-1"></div>-->
@@ -305,13 +316,19 @@
             .append("text")
             .style("x", 10)
             .style("y", 10)
-            .style("visibility", "hidden");
+            .html(" <b>Scheme: </b>"  + "<br/>"  
+                                + " <b>Reconstruction: </b>"  + "<br/>"             
+                                + " <b>Radiative Transfer: </b>"  + "<br/>"                             
+                                );
 
         var modtipbc = d3.select("#blockleftbot")
             .append("text")
             .style("x", 10)
             .style("y", 10)
-            .style("visibility", "hidden");
+            .html("<b>Side: </b>"+ "<br/>"
+                                + "  <b>Bottom: </b>" + "<br/>"
+                                + "  <b>Top: </b>" + "<br/>"
+                                );
         
         var modtipname = d3.select("#blocktop")
             .append("text")
@@ -332,7 +349,13 @@
             .append("text")
             .style("x", 10)
             .style("y", 10)
-            .style("visibility", "hidden");
+            .html("<b>Hardware:</b> "+ "<br/>"  
+                               + "<b>Machine:</b> " + "<br/>"  
+                               + "<b>System:</b> " + "<br/>" 
+                               + "<b>Started:</b> " + "<br/>" 
+                               + "<b>Ended:</b> " +  "<br/>" 
+                               + "<b>Duration:</b> "+"<br/>" 
+                               );
 
         var xScale = d3.scale.linear()
             .domain([-10., 50000.]) //the minimum and maximum time of the entire simulation
@@ -453,29 +476,44 @@
                 d3.select(this)
                     .transition()
                     .duration(100)
-                    .style("fill", function (d) { return d.magnetic == 1 ? "silver" : "gray"; });
- 
+                    .style("fill", function (d) { return d.magnetic == 1 ? "silver" : "gray"; })
+                    ;
                 
-                modtipname.transition()		
-                .duration(100).style("visibility", "hidden");
                 
-                modtipmain.transition()		
-                .duration(100).style("visibility", "hidden");
+//                var thisthing =  d3.select(this);
+//                repeat2();
+//                
+//                function repeat2() {
+//                   thisthing
+//                    .style("fill", function (d) { return d.magnetic == 1 ? "silver" : "gray"; })
+//                    .transition()
+//                    .duration(1000)
+//                    .style("fill", "red")
+//                    .each("end", repeat2)
+//                }
+//                
                 
-                modtipphys.transition()		
-                .duration(100).style("visibility", "hidden");
-           
-                modtipbc.transition()		
-                .duration(100).style("visibility", "hidden");
                 
-                modtipcomp.transition()		
-                .duration(100).style("visibility", "hidden");
-                
-                if (d3.select('body').select(".mypartable").empty()){
-                    
-                } else {
-                d3.select('#parambox').selectAll("table").style("opacity","0.25");
-                }
+//                modtipname.transition()		
+//                .duration(100).style("visibility", "hidden");
+//                
+//                modtipmain.transition()		
+//                .duration(100).style("visibility", "hidden");
+//                
+//                modtipphys.transition()		
+//                .duration(100).style("visibility", "hidden");
+//           
+//                modtipbc.transition()		
+//                .duration(100).style("visibility", "hidden");
+//                
+//                modtipcomp.transition()		
+//                .duration(100).style("visibility", "hidden");
+//                
+//                if (d3.select('body').select(".mypartable").empty()){
+//                    
+//                } else {
+//                d3.select('#parambox').selectAll("table").style("opacity","0.25");
+//                }
             });
    //         .on("click", function (d) {
                 
@@ -559,17 +597,17 @@
                 return d.running == 0 ? 0 : (h / dataset.length) / 4.5;
             })
 
-         var blinker2text = d3.select("#blinky2").append("svg")
+        var blive= d3.select("#blinky").append("svg")
+        var blinker2text = blive
             .append("text")
-            .attr("x", 100)
-            .attr("y", 9)
-            .text("gg")
+            .attr("x", 12)
+            .attr("y", 10)
+            .text("Live").style("font-weight","bold");
         
-        var blinker2 = d3.select("#blinky")
-            .append("svg").append("circle")
-            .attr("cx", 4)
-            .attr("cy", 4)
-            .attr("r", (h / dataset.length) / 4.5)
+        var blinker2 = blive.append("circle")
+            .attr("cx", 5)
+            .attr("cy", 6)
+            .attr("r", 4.5)
         
         
         
@@ -641,7 +679,7 @@
         
         //running part
         
-        frt(datarunning.stime,datarunning.frtop,"blockrright");
+        frt(datarunning.stime,datarunning.frtop,"blockrright","frtop");
         
         d3.selectAll("button").on("click", change);
 
@@ -656,7 +694,8 @@
             
             var dtime = (this.value == "frtop") ? "stime" : "time";
             
-            frt(datarunning[dtime],datarunning[this.value],"blockrright");
+            
+            frt(datarunning[dtime],datarunning[this.value],"blockrright", this.value);
             
             // First transition the line & label to the new city.
             //var t0 = svg.transition().duration(750);
@@ -672,7 +711,7 @@
         }
     
        
-        function frt(xdata,ydata,position) {
+        function frt(xdata,ydata,position,quanlabel) {
                     //frtop 
     
         
@@ -680,13 +719,13 @@
             var minfrtop = Math.min.apply(null,ydata);
             var maxfrtopvar = Math.max.apply(null,[maxfrtop-1,1-minfrtop]);
 
-            var padding = document.getElementById(position).offsetWidth/10;
+            var padding = document.getElementById(position).offsetWidth/20;
 
             //alert(document.getElementById("intensityimg").offsetHeight - document.getElementById("mybuttons").offsetHeight);
             var margin = {
                     top: 0,
                     right: document.getElementById(position).offsetWidth *0.05,
-                    bottom: 12,
+                    bottom: 1000,
                     left: document.getElementById(position).offsetWidth * 0.05
                 },
                 width = document.getElementById(position).offsetWidth,//document.getElementById(position).offsetWidth - margin.left - margin.right,
@@ -725,11 +764,12 @@
                 .tickFormat(d3.format("i"));
 
 
+            var yformat = (quanlabel == "frtop") ? "i" : ".1e";
             var yAxis = d3.svg.axis()
                 .scale(yScale)
                 .orient("left")
                 .ticks(5)
-                .tickFormat(d3.format("i"));
+                .tickFormat(d3.format(yformat));
 
             var drag = d3.behavior.drag()
                 .origin(function(d) { return d; })
@@ -776,14 +816,26 @@
 
             graph.append("text").attr("class", "axislabel")
                 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-                .text("Frtop");
-
+                .attr("transform", "translate("+ (padding) +","+(padding)+")")  // text is drawn off the screen top left, move down and out and rotate
+                .text(quanlabel)
+                .style("text-anchor", "begin")
+                .style("font-weight","bold")
+                .style("fill","gray")
+                .attr("dy", "-.71em")
+                .attr("dx", ".1em");
+                //.attr("transform", "rotate(-90)")
+                //.attr("dy", ".71em");
+            
             graph.append("text").attr("class", "axislabel")
                 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 
-                .attr("transform", "translate("+ (width/2) +","+(height-(padding/2))+")")  // centre below axis
-                .text("Time (min)");
+                .attr("transform", "translate("+ (width-padding) +","+(height-padding)+")")  // centre below axis
+                .text("Time (min)")
+                .style("text-anchor", "end")
+                .style("font-weight","bold")
+                .style("fill","gray")
+                .attr("dx", "-.71em")
+                .attr("dy", "+2.25em");
 
 
             function zoomed() {
