@@ -591,8 +591,6 @@
         // var table = ;
 
 
-
-        
         
         //blinker for running programs
         var blinker = svg.selectAll("circle")
@@ -614,7 +612,36 @@
             .append("text")
             .attr("x", 12)
             .attr("y", 10)
-            .text("Live").style("font-weight","bold");
+            .text("Live: ").style("font-weight","bold");
+        
+        var blinker3text = blive.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("x", function (d, i) {
+                return d.running == 0 ? 600 : 50;;
+            })
+            .attr("y", function (d, i) {
+                return d.running == 0 ? 0 : 10;
+            })
+            .html( function (d, i) {
+                
+               var lookup = {};
+                
+                for (var i = 0, len = d.params.length; i < len; i++) {
+                    lookup[d.params[i].parameter] = d.params[i].value;
+                }
+                
+                var modeltext = d.name+ " - " 
+                                + parseInt(lookup["teff"]) + ", " 
+                                //+ " K, "  
+                                //    + "Gravity:  " 
+                                + parseInt(lookup["grav"]) +", "//cm s-2"  + ", "  
+                                //+ "Entropy (inflow): " 
+                                + lookup["s_inflow"]  
+                               
+                return modeltext;
+                });
         
         var blinker2 = blive.append("circle")
             .attr("cx", 5)
@@ -847,7 +874,7 @@
                 .style("font-weight","bold")
                 .style("fill","gray")
                 .attr("dx", "-.71em")
-                .attr("dy", "+2.25em");
+                .attr("dy", "-.25em");
 
 
             function zoomed() {
@@ -1036,6 +1063,27 @@
                     .attr("transform", "translate("+(width/2) + "," + hpadding + ")")
                     .call(xAxis2)
 
+                graph1.append("text").attr("class", "axislabel")
+                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+
+                .attr("transform", "translate("+ (width/4+(wpadding/2)) +","+(height-hpadding)+")")  // centre below axis
+                .text("Date")
+                .style("text-anchor", "center")
+                .style("font-weight","bold")
+                .style("fill","gray")
+                //.attr("dx", "-5.71em")
+                .attr("dy", "1.5em");
+
+                 
+                graph1.append("text").attr("class", "axislabel")
+                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                .attr("transform", "translate("+ (wpadding) +","+(hpadding)+"), rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+                .text("Walltime (min)")
+                .style("text-anchor", "begin")
+                .style("font-weight","bold")
+                .style("fill","gray")
+                .attr("dy", "1em")
+                .attr("dx", "-1em");
                  
 //                var y_axis2=	graph1.append("g")
 //                    .attr("class", "y axis")
