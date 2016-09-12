@@ -9,8 +9,10 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript"  src="http://d3js.org/d3-time-format.v2.min.js"></script>
     <script src="ftp://ftp.leibniz-kis.de/personal/vigeesh/simprogress/fullset.json"></script>
     <script src="ftp://ftp.leibniz-kis.de/personal/vigeesh/simprogress/frtop.json"></script>
+    <script src="ftp://ftp.leibniz-kis.de/personal/vigeesh/simprogress/walltime.json"></script>
     <style type="text/css">
         body {
             font-family: 'Helvetica Neue', Helvetica;
@@ -237,22 +239,8 @@
     </div>
     <div class="row  row-eq-height" id="blocksrunning">
 <!--      <div class="col-sm-1"></div>-->
-      <div class="col-sm-3" id="blockrunl">
-          <div class="panel-group">
-                <div class="panel panel-default">
-<!--
-                    <div class="panel-heading">
-                        Boundary
-                    </div>
--->
-                    <div class="panel-body">
-                       <img class="img-responsive" src="ftp://ftp.leibniz-kis.de/personal/vigeesh/simprogress/intensity.png" id="intensityimg">
-                       
-                    </div>
-                </div>
-            </div>
-      </div>
-      <div class="col-sm-6" id="blockrunr">
+
+      <div class="col-sm-5" id="blockrunr">
           <div class="panel-group">
                 <div class="panel panel-default">
 <!--
@@ -268,6 +256,30 @@
                             <button type="button" class="btn my-btn btn-xs"  name="quant" value="s_mean2_x3">Entropy</button>
                         </form>  
                         <div id="blockrright"></div>
+                    </div>
+                </div>
+            </div>
+      </div> 
+          <div class="col-sm-3" id="blockrunl">
+          <div class="panel-group">
+                <div class="panel panel-default">
+<!--
+                    <div class="panel-heading">
+                        Boundary
+                    </div>
+-->
+                    <div class="panel-body">
+                       <img class="img-responsive" src="ftp://ftp.leibniz-kis.de/personal/vigeesh/simprogress/intensity.png" id="intensityimg">
+                       
+                    </div>
+                </div>
+            </div>
+      </div>    
+      <div class="col-sm-4" id="blockrunr">
+          <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div id="blockrhist"></div>
                     </div>
                 </div>
             </div>
@@ -872,6 +884,180 @@
             
         }
         
+        hist(walldata.wallend,walldata.wallduration,walldata.histbins,walldata.hist,"blockrhist");
+     
+    
+     function hist(xdata,ydata,hxdata,hydata,position) {
+           
+            var mindur = Math.min.apply(null,ydata)/60.;
+            var maxdur = 250;//(Math.max.apply(null,ydata)+1000)/60.;
+            
+            var wpadding = 20;
+            var hpadding = document.getElementById(position).offsetWidth/10;
+         
+            var margin = {
+                    top: 0,
+                    right: document.getElementById(position).offsetWidth *0.05,
+                    bottom: 12,
+                    left: document.getElementById(position).offsetWidth * 0.05
+                },
+                width = document.getElementById(position).offsetWidth,
+                height = document.getElementById("intensityimg").offsetHeight; 
+
+            var firsttime =  new Date(xdata[0]);
+            var lasttime = new Date(xdata[xdata.length-1]);
+
+            var xScale1 = d3.time.scale()
+                .domain([firsttime,lasttime])
+                .nice(d3.time.month)
+                .range([wpadding, width/2]);
+
+            var yScale1 = d3.scale.linear()
+                .domain([0,maxdur])
+                .range([height - hpadding, hpadding]);
+
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale1)
+                .orient("bottom")
+                .ticks(2)
+                .tickFormat(d3.timeFormat("%b %d"))
+                
+            var yAxis = d3.svg.axis()
+                .scale(yScale1)
+                .orient("left")
+                .ticks(5)
+                .tickFormat(d3.format("i"));
+
+            var graph1 = d3.select("#"+position)
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+         
+          graph1.selectAll("path")
+                .data(xdata)
+                .enter()
+                .append("line")          // attach a line
+                .attr("stroke", "lightgray")  // colour the line
+                .attr("stroke-width", 1)
+                .attr("x1", function(d,i) { 
+                    var time = new Date(xdata[i]);
+                    return xScale1(time);
+                })    
+                .attr("y1", function(d,i) { return yScale1(0); })   
+                .attr("x2", function(d,i) { 
+                    var time = new Date(xdata[i]);
+                    return xScale1(time);
+                })    
+                .attr("y2", function(d,i) { 
+                    var yyy = parseFloat(ydata[i]/60.);
+                    return yScale1(yyy); 
+                })
+                
+            
+            
+            graph1.selectAll("circle")
+                .data(xdata)
+                .enter()
+                .append("circle")
+                .attr("cx", function(d,i) {  
+                    var time = new Date(xdata[i]);
+                    return xScale1(time);
+                })
+                .attr("cy", function(d,i) { 
+                    var yyy = parseFloat(ydata[i]/60.);
+                    return yScale1(yyy); 
+                })
+                .attr("r", 3.)
+                .attr("fill","crimson").attr("opacity","0.8");
+                  
+         
+            // histogram
+         
+            var firstsize =  Math.min.apply(null,hydata);
+            var lastsize =  Math.max.apply(null,hydata);
+
+            var xScale2 = d3.scale.linear()
+                .domain([0,lastsize+1])
+                .range([0, (width/2)]);
+
+            var yScale2 = d3.scale.linear()
+                .domain([0,maxdur])
+                .range([height - hpadding, hpadding]);
+
+            var xAxis2 = d3.svg.axis()
+                .scale(xScale2)
+                .orient("top")
+                .ticks(2)
+                .tickFormat(d3.format("i"));
+            
+            var yAxis2 = d3.svg.axis()
+                .scale(yScale2)
+                .orient("right")
+                .ticks(5)
+                .tickFormat(d3.format("i"));
+    
+          graph1.selectAll("path")
+                .data(hxdata)
+                .enter()
+                .append("rect") 
+                .attr("fill","crimson")
+                //.attr("opacity","0.8")
+                .attr("y", function(d,i) { 
+                    var time = parseFloat(hxdata[i]);
+                    return yScale2(time)-2.5;
+                })    
+                .attr("x", function(d,i) { return xScale2(0)+width/2; })   
+                .attr("width", function(d,i) { 
+                    var time = parseFloat(hydata[i]);
+                    return xScale2(time);
+                })    
+                .attr("height", 5)
+                
+            
+          
+                 
+                var x_axis=	graph1.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + (height - hpadding) + ")")
+                    .call(xAxis)
+
+                var y_axis=	graph1.append("g")
+                    .attr("class", "y axis")
+                    .attr("transform", "translate("+wpadding+ ",0)")
+                    .call(yAxis);    
+
+          
+                 var x_axis2=	graph1.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate("+(width/2) + "," + hpadding + ")")
+                    .call(xAxis2)
+
+                 
+//                var y_axis2=	graph1.append("g")
+//                    .attr("class", "y axis")
+//                    .attr("transform", "translate("+(width-2.0*wpadding)+ ",0)")
+//                    .call(yAxis2);//.attr("stroke","none");                     
+//                
+//         
+                 
+//                var y_axis2=	graph1.append("g")
+//                    .attr("class", "y axis2")
+//                    .attr("transform", "translate("+width/2+ ",0)")
+//                    .call(yAxis2)
+//                    .attr("opacity",0.2)
+//                    .style("font-weight","bold");//.attr("stroke","none");                     
+//                
+         
+            
+            }
+        
+        
+        
+        //histogram
         
         
         
