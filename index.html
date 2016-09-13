@@ -198,6 +198,7 @@
             <div class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center" style="max-height: 10;">
+                        Model
                         <div id="blocktop"></div>
                     </div>
                     <div class="panel-body">
@@ -214,7 +215,17 @@
                         Resources
                     </div>
                     <div class="panel-body">
-                        <div id="blockright"></div>
+                        <div id="blockrighttop"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Schedule
+                    </div>
+                    <div class="panel-body">
+                        <div id="blockrightbot"></div>
                     </div>
                 </div>
             </div>
@@ -357,17 +368,25 @@
             .style("visibility", "hidden");
         
         
-        var modtipcomp = d3.select("#blockright")
+        var modtipcomp = d3.select("#blockrighttop")
             .append("text")
             .style("x", 10)
             .style("y", 10)
             .html("<b>Hardware:</b> "+ "<br/>"  
                                + "<b>Machine:</b> " + "<br/>"  
                                + "<b>System:</b> " + "<br/>" 
-                               + "<b>Started:</b> " + "<br/>" 
+                               );
+        
+        var modtipsched = d3.select("#blockrightbot")
+            .append("text")
+            .style("x", 10)
+            .style("y", 10)
+            .html("<b>Started:</b> " + "<br/>" 
                                + "<b>Ended:</b> " +  "<br/>" 
                                + "<b>Duration:</b> "+"<br/>" 
                                );
+        
+        
 
         var xScale = d3.scale.linear()
             .domain([-10., 50000.]) //the minimum and maximum time of the entire simulation
@@ -474,11 +493,16 @@
                 modtipcomp.html("<b>Hardware:</b> " + d.hardware + "<br/>"  
                                + "<b>Machine:</b> " + d.machine + "<br/>"  
                                + "<b>System:</b> " + d.system + "<br/>" 
-                               + "<b>Started:</b> " + start_date.toLocaleTimeString("en-us", dateoptions) + "<br/>" 
+                               )
+                    .transition()
+                    .duration(100)
+                    .style("visibility", "visible")
+                
+                
+               modtipsched.html("<b>Started:</b> " + start_date.toLocaleTimeString("en-us", dateoptions) + "<br/>" 
                                + "<b>Ended:</b> " + end_date.toLocaleTimeString("en-us", dateoptions) + "<br/>" 
                                + "<b>Duration:</b> " + durdays + " d, " + durhours + " h, " + durminutes + " m " + "<br/>" 
                                )
-                
                     .transition()
                     .duration(100)
                     .style("visibility", "visible")
@@ -855,13 +879,13 @@
 
             graph.append("text").attr("class", "axislabel")
                 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate("+ (padding) +","+(padding)+")")  // text is drawn off the screen top left, move down and out and rotate
+                .attr("transform", "translate("+ (padding) +","+(padding)+"),rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
                 .text(quanlabel)
-                .style("text-anchor", "begin")
+                .style("text-anchor", "end")
                 .style("font-weight","bold")
                 .style("fill","gray")
-                .attr("dy", "-.71em")
-                .attr("dx", ".1em");
+                .attr("dy", "1.0em")
+                .attr("dx", "1.1em");
                 //.attr("transform", "rotate(-90)")
                 //.attr("dy", ".71em");
             
@@ -873,7 +897,7 @@
                 .style("text-anchor", "end")
                 .style("font-weight","bold")
                 .style("fill","gray")
-                .attr("dx", "-.71em")
+                .attr("dx", "-.1em")
                 .attr("dy", "-.25em");
 
 
@@ -920,7 +944,7 @@
             var maxdur = 250;//(Math.max.apply(null,ydata)+1000)/60.;
             
             var wpadding = 20;
-            var hpadding = document.getElementById(position).offsetWidth/10;
+            var hpadding = document.getElementById(position).offsetWidth/15;
          
             var margin = {
                     top: 0,
@@ -936,7 +960,7 @@
 
             var xScale1 = d3.time.scale()
                 .domain([firsttime,lasttime])
-                .nice(d3.time.month)
+                .nice(d3.time.day)
                 .range([wpadding, width/2]);
 
             var yScale1 = d3.scale.linear()
@@ -1066,13 +1090,13 @@
                 graph1.append("text").attr("class", "axislabel")
                 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 
-                .attr("transform", "translate("+ (width/4+(wpadding/2)) +","+(height-hpadding)+")")  // centre below axis
+                .attr("transform", "translate("+ (width/2) +","+(height-hpadding)+")")  // centre below axis
                 .text("Date")
-                .style("text-anchor", "center")
+                .style("text-anchor", "end")
                 .style("font-weight","bold")
                 .style("fill","gray")
-                //.attr("dx", "-5.71em")
-                .attr("dy", "1.5em");
+                .attr("dx", "1.0em")
+                .attr("dy", "-.25em");
 
                  
                 graph1.append("text").attr("class", "axislabel")
@@ -1083,7 +1107,7 @@
                 .style("font-weight","bold")
                 .style("fill","gray")
                 .attr("dy", "1em")
-                .attr("dx", "-1em");
+                .attr("dx", "-2em");
                  
 //                var y_axis2=	graph1.append("g")
 //                    .attr("class", "y axis")
