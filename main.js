@@ -279,15 +279,9 @@ function parameterbox() {
     var thead = d3.select('#area2').attr("class", "mypartab").select("thead").selectAll("th")
         .data(d)
         .enter()
-        .append("th").text(function (d) {
-            return d
-        })
+        .append("th").text(function (d) { return d })
         .style("cursor", "pointer")
-        .on("click", function (d) {
-            d3.select(".mypartab").remove();
-            //parameterbox();
-            return 0;
-        });
+        .on("click", function (d) { d3.select(".mypartab").remove(); return 0;});
 
     // fill the table
     // create rows
@@ -296,13 +290,9 @@ function parameterbox() {
 
     // cells
     var td = tr.selectAll("td")
-        .data(function (d) {
-            return d3.values(d)
-        })
+        .data(function (d) { return d3.values(d)})
         .enter().append("td")
-        .text(function (d) {
-            return d
-        })
+        .text(function (d) { return d })
         //parbox.active = active;
     return 0;
 }
@@ -360,12 +350,10 @@ function frt(xdata, ydata, position, quanlabel) {
 
     var line = d3.svg.line()
         .x(function (d, i) {
-            var time = parseFloat(xdata[i]);
-            return xScale((time - firsttime) / 60.);
+            return xScale((parseFloat(xdata[i]) - firsttime) / 60.);
         })
         .y(function (d, i) {
-            var yyy = parseFloat(ydata[i]);
-            return yScale(yyy);
+            return yScale(parseFloat(ydata[i]));
         })
         .interpolate("linear");
 
@@ -385,9 +373,7 @@ function frt(xdata, ydata, position, quanlabel) {
         .tickFormat(d3.format(yformat));
 
     var drag = d3.behavior.drag()
-        .origin(function (d) {
-            return d;
-        })
+        .origin(function (d) { return d;})
         .on("dragstart", dragstarted)
         .on("drag", dragged)
         .on("dragend", dragended);
@@ -521,19 +507,16 @@ function hist(xdata, ydata, hxdata, hydata, position) {
         .attr("stroke", "lightgray") // colour the line
         .attr("stroke-width", 1)
         .attr("x1", function (d, i) {
-            var time = new Date(xdata[i]);
-            return xScale1(time);
+            return xScale1( new Date(xdata[i]));
         })
         .attr("y1", function (d, i) {
             return yScale1(0);
         })
         .attr("x2", function (d, i) {
-            var time = new Date(xdata[i]);
-            return xScale1(time);
+            return xScale1(new Date(xdata[i]));
         })
         .attr("y2", function (d, i) {
-            var yyy = parseFloat(ydata[i] / 60.);
-            return yScale1(yyy);
+            return yScale1(parseFloat(ydata[i] / 60.));
         })
 
 
@@ -543,12 +526,10 @@ function hist(xdata, ydata, hxdata, hydata, position) {
         .enter()
         .append("circle")
         .attr("cx", function (d, i) {
-            var time = new Date(xdata[i]);
-            return xScale1(time);
+            return xScale1(new Date(xdata[i]));
         })
         .attr("cy", function (d, i) {
-            var yyy = parseFloat(ydata[i] / 60.);
-            return yScale1(yyy);
+            return yScale1(parseFloat(ydata[i] / 60.));
         })
         .attr("r", 3.)
         .attr("fill", "crimson").attr("opacity", "0.8");
@@ -586,15 +567,13 @@ function hist(xdata, ydata, hxdata, hydata, position) {
         .attr("fill", "crimson")
         //.attr("opacity","0.8")
         .attr("y", function (d, i) {
-            var time = parseFloat(hxdata[i]);
-            return yScale2(time) - 2.5;
+            return yScale2(parseFloat(hxdata[i])) - 2.5;
         })
         .attr("x", function (d, i) {
             return xScale2(0) + width / 2;
         })
         .attr("width", function (d, i) {
-            var time = parseFloat(hydata[i]);
-            return xScale2(time);
+            return xScale2(parseFloat(hydata[i]));
         })
         .attr("height", 5)
 
