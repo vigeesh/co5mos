@@ -468,8 +468,9 @@ function hist(xdata, ydata, hxdata, hydata, position) {
         height = document.getElementById("intensityimg").offsetHeight;
 
     var firsttime = new Date(xdata[0]);
-    var lasttime = new Date(xdata[xdata.length - 1]);
-
+    //var lasttime = new Date(xdata[xdata.length - 1]);
+    var lasttime = new Date();
+    
     var xScale1 = d3.time.scale()
         .domain([firsttime, lasttime])
         .nice(d3.time.day)
@@ -534,6 +535,25 @@ function hist(xdata, ydata, hxdata, hydata, position) {
         .attr("r", 3.)
         .attr("fill", "crimson").attr("opacity", "0.8");
 
+    
+    graph1.selectAll("path")
+        .append("line") // attach a line
+        .attr("stroke", "lightblue") // colour the line
+        .attr("stroke-width", 1)
+        .attr("x1", function (d, i) {
+            return xScale1( new Date());
+        })
+        .attr("y1", function (d, i) {
+            return yScale1(0);
+        })
+        .attr("x2", function (d, i) {
+            return xScale1(new Date());
+        })
+        .attr("y2", function (d, i) {
+            return yScale1(maxdur);
+        })
+
+    
 
     // histogram
 
