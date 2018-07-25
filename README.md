@@ -1,3 +1,4 @@
 # cobold-stat
 
-http://vigeesh.github.io/cobold-stat/
+http://vigeesh.github.io/co5mos
+
